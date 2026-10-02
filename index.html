@@ -1,1 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Slide 10: Brochure Design Portfolio Showcase" />
+  <title>Brochure Design — Portfolio '26</title>
 
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-dark: #0a0c10;
+      --card-bg: rgba(255, 255, 255, 0.03);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover: rgba(255, 255, 255, 0.07);
+      --accent-amber: #f59e0b;
+      --accent-cyan: #06b6d4;
+      --text-main: #f3f4f6;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --font-display: 'Syne', sans-serif;
+      --font-mono: 'Space Grotesk', monospace, sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2.5rem 1.25rem;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Lighting */
+    .glow-top-right {
+      position: fixed;
+      top: -10%;
+      right: -10%;
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.07) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glow-bottom-left {
+      position: fixed;
+      bottom: -15%;
+      left: -10%;
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.05) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Slide 10 Layout */
+    #slide-10 {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1280px;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* Header */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 1.25rem;
+    }
+
+    .category-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      margin-bottom: 0.75rem;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-amber);
+      box-shadow: 0 0 8px var(--accent-amber);
+    }
+
+    .badge-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent-amber);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .slide-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.25rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .slide-counter {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+    }
+
+    /* Main Grid */
+    .slide-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1.75rem;
+    }
+
+    @media (max-width: 960px) {
+      .slide-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Left Card: 3D Preview */
+    .preview-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .mockup-stage {
+      perspective: 1200px;
+      padding: 2.5rem 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .tri-fold {
+      display: flex;
+      gap: 3px;
+      width: 100%;
+      max-width: 560px;
+      height: 320px;
+      transform-style: preserve-3d;
+      transform: rotateX(12deg) rotateY(-14deg) rotateZ(2deg);
+      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .tri-fold:hover {
+      transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    }
+
+    .panel {
+      flex: 1;
+      height: 100%;
+      background: linear-gradient(145deg, #181d24, #10141a);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: -12px 20px 35px rgba(0, 0, 0, 0.5);
+    }
+
+    .panel-center {
+      background: linear-gradient(145deg, #1b2029, #13171e);
+    }
+
+    .panel-right {
+      background: linear-gradient(145deg, #222935, #161a22);
+    }
+
+    .panel-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .brand-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent-amber);
+      color: #000;
+      font-size: 0.65rem;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+    }
+
+    .brand-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #fff;
+    }
+
+    .panel-img {
+      height: 90px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, #1e293b, #334155);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.4);
+      letter-spacing: 0.08em;
+    }
+
+    .wire-lines {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .wline {
+      height: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 2px;
+    }
+
+    .wline.w100 { width: 100%; }
+    .wline.w70 { width: 70%; }
+    .wline.w40 { width: 40%; }
+
+    .preview-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--card-border);
+    }
+
+    .view-toggles {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .btn-toggle {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-toggle.active, .btn-toggle:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .external-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent-amber);
+      text-decoration: none;
+      transition: gap 0.2s;
+    }
+
+    .external-link:hover {
+      gap: 0.65rem;
+    }
+
+    /* Right Column: Spec Sheet */
+    .specs-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .info-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 1.5rem;
+    }
+
+    .info-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      margin-top: 0.4rem;
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+    }
+
+    .info-body {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .spec-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 1.1rem;
+      transition: border-color 0.2s;
+    }
+
+    .spec-box:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .spec-box.full-width {
+      grid-column: span 2;
+    }
+
+    .spec-key {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.35rem;
+    }
+
+    .spec-val {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .spec-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .chips {
+      display: flex;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    .chip {
+      padding: 0.25rem 0.5rem;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #e2e8f0;
+    }
+
+    .palette {
+      display: flex;
+      gap: 0.45rem;
+      margin-top: 0.5rem;
+    }
+
+    .dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Footer Nav */
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--card-border);
+      padding-top: 1.25rem;
+    }
+
+    .footer-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow-top-right"></div>
+  <div class="glow-bottom-left"></div>
+
+  <section id="slide-10" aria-label="Slide 10: Brochure Design">
+
+    <!-- Top Slide Header -->
+    <header class="slide-header">
+      <div>
+        <div class="category-badge">
+          <span class="badge-dot"></span>
+          <span class="badge-label">PRINT &amp; EDITORIAL WORK</span>
+        </div>
+        <h1 class="slide-heading">09. BROCHURE DESIGN</h1>
+      </div>
+      <div class="slide-counter">10 / 12</div>
+    </header>
+
+    <!-- Main Content Layout -->
+    <div class="slide-grid">
+
+      <!-- Left Column: 3D Preview -->
+      <div class="preview-card">
+        <span class="card-label">TRI-FOLD EDITORIAL SHOWCASE</span>
+
+        <div class="mockup-stage">
+          <div class="tri-fold" id="mockup">
+            
+            <!-- Left Fold -->
+            <div class="panel">
+              <div class="panel-brand">
+                <div class="brand-icon">A</div>
+                <div class="brand-title">AURA CORP</div>
+              </div>
+              <div class="wire-lines">
+                <div class="wline w100"></div>
+                <div class="wline w70"></div>
+                <div class="wline w40"></div>
+              </div>
+              <div class="wline w40"></div>
+            </div>
+
+            <!-- Center Fold (Inner Spread) -->
+            <div class="panel panel-center">
+              <div class="panel-img">✦ ARCHITECTURE '26</div>
+              <div class="wire-lines">
+                <div class="wline w100"></div>
+                <div class="wline w100"></div>
+                <div class="wline w70"></div>
+              </div>
+              <span style="font-size: 0.65rem; color: var(--accent-amber); font-weight:700;">VOL. 26 ANNUAL</span>
+            </div>
+
+            <!-- Right Fold (Cover) -->
+            <div class="panel panel-right">
+              <span style="font-size: 0.65rem; color: var(--text-dim); font-weight:700;">OVERVIEW</span>
+              <div class="wire-lines">
+                <div class="wline w100"></div>
+                <div class="wline w100"></div>
+                <div class="wline w100"></div>
+                <div class="wline w70"></div>
+              </div>
+              <span style="font-size: 0.65rem; color: #fff; font-weight:700;">WWW.AURADESIGN.IO</span>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="preview-footer">
+          <div class="view-toggles">
+            <button class="btn-toggle active" onclick="setAngle('perspective', this)">Perspective</button>
+            <button class="btn-toggle" onclick="setAngle('flat', this)">Flat Spread</button>
+            <button class="btn-toggle" onclick="setAngle('iso', this)">Isometric</button>
+          </div>
+          <a class="external-link" href="https://www.behance.net/rrsakir" target="_blank" rel="noopener noreferrer">
+            <span>View on Behance</span>
+            <span>↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Column: Project Specifications -->
+      <div class="specs-column">
+
+        <div class="info-card">
+          <span class="card-label">PROJECT OVERVIEW</span>
+          <h2 class="info-title">Aura Architecture &amp; Urban Spaces Tri-Fold</h2>
+          <p class="info-body">
+            Minimalist editorial collateral engineered for architecture and urban design studios. Built on a 6-column modular baseline grid with high-contrast typographic hierarchy and tactile print finishing.
+          </p>
+        </div>
+
+        <div class="spec-grid">
+
+          <div class="spec-box">
+            <div class="spec-key">Format &amp; Size</div>
+            <div class="spec-val">A4 Tri-Fold</div>
+            <div class="spec-sub">6 Panels • 3mm Bleed</div>
+          </div>
+
+          <div class="spec-box">
+            <div class="spec-key">Color Profile</div>
+            <div class="spec-val">CMYK / 300 DPI</div>
+            <div class="spec-sub">FOGRA39 Coated Standard</div>
+          </div>
+
+          <div class="spec-box">
+            <div class="spec-key">Paper &amp; Stock</div>
+            <div class="spec-val">250 GSM Silk</div>
+            <div class="spec-sub">Matte Lamination + Spot UV</div>
+          </div>
+
+          <div class="spec-box">
+            <div class="spec-key">Software Stack</div>
+            <div class="chips">
+              <span class="chip">Illustrator</span>
+              <span class="chip">InDesign</span>
+              <span class="chip">Photoshop</span>
+            </div>
+          </div>
+
+          <div class="spec-box full-width">
+            <div class="spec-key">Brand Palette</div>
+            <div class="palette">
+              <div class="dot" style="background: #0f172a;" title="Slate Black (#0F172A)"></div>
+              <div class="dot" style="background: #f59e0b;" title="Warm Amber (#F59E0B)"></div>
+              <div class="dot" style="background: #f8fafc;" title="Pure Chalk (#F8FAFC)"></div>
+              <div class="dot" style="background: #334155;" title="Steel Slate (#334155)"></div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Navigation Footer -->
+    <footer class="slide-footer">
+      <a href="#slide-9" class="footer-link">
+        <span>←</span>
+        <span>08. FLYER DESIGN</span>
+      </a>
+      <a href="#slide-1" class="footer-link">
+        <span>BACK TO TOP</span>
+        <span>↑</span>
+      </a>
+    </footer>
+
+  </section>
+
+  <!-- Interactive Controls Script -->
+  <script>
+    const mockup = document.getElementById('mockup');
+
+    function setAngle(mode, button) {
+      document.querySelectorAll('.btn-toggle').forEach(b => b.classList.remove('active'));
+      button.classList.add('active');
+
+      if (mode === 'perspective') {
+        mockup.style.transform = 'rotateX(12deg) rotateY(-14deg) rotateZ(2deg)';
+      } else if (mode === 'flat') {
+        mockup.style.transform = 'rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1.03)';
+      } else if (mode === 'iso') {
+        mockup.style.transform = 'rotateX(18deg) rotateY(24deg) rotateZ(-6deg)';
+      }
+    }
+  </script>
+
+</body>
+</html>
